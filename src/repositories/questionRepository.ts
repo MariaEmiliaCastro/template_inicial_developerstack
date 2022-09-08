@@ -1,7 +1,6 @@
 // TODO
 import { prisma } from "../config/database";
 import { Question } from "@prisma/client";
-import { number } from "joi";
 
 const questionRepository = {
     createQuestion: async (question: Question) => {
@@ -13,8 +12,9 @@ const questionRepository = {
         return await prisma.question.findMany();
     },
     getQuestionById: async (id: number) => {
+        const parsedId = parseInt(id as unknown as string);
         return await prisma.question.findUnique({
-            where: {id : 1},
+            where: {id: parsedId},
             include: {
                 Answer: true,
             }
